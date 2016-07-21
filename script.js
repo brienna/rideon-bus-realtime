@@ -1,29 +1,42 @@
 
-// Make the HTTP request to obtain realtime data
+var busNum = "46";  // later change to receive input from user
+var stopID = "25630";  // later change too
+var token = "?auth_token=SeQVpws7zfFC1Sqsx6twmswxwJkD5vdnyJLTxujPTho7GNfK4CaBsArr"
+
+// Get realtime data via HTTP request to RideOn API
 var xhr = new XMLHttpRequest();
-xhr.open("GET", 'http://rideonrealtime.net/gtfs_realtime.txt?auth_token=SeQVpws7zfFC1Sqsx6twmswxwJkD5vdnyJLTxujPTho7GNfK4CaBsArr', false);
+xhr.open("GET", "http://rideonrealtime.net/arrivals/" + stopID + ".json" + token, false);
 xhr.send();
 
 // Check status of request
-console.log(xhr.status)  // should get 200
-console.log(xhr.statusText);  // should get OK
-console.log(typeof xhr.response);  // should be string
+console.log(xhr.status, xhr.statusText);  // should get 200, OK
 
-// Handle the response, which comes in text format
-// It needs to be converted to JSON
-var response = xhr.responseText;
-response = "{" + response + "}";
-// Add commas after key:value pairs
-response = response.replace(/((?:[^{}]))(\n)((?!\s+}))/g, "$1,$3");
-// Add comma after object value (no trailing commas)
-response = response.replace(/(})(\s+)(\b)/g, "$1,$3");
-// Add colon after key that precedes an object value
-response = response.replace(/(\b)(\s[{])/g, "$1: {");
-var FULL_DATASET = null;  // just to shut up the "undefined" warning, may need to fix this
-var json = JSON.stringify(eval("(" + response + ")"));
+// Handle the response, which comes in JSON format
+var json = xhr.responseText;
 var data = JSON.parse(json);
-console.log(typeof data);
-console.log(data);
+
+// Get calculated arrivals, which is based on realtime data
+var arrivals = data["calculated_arrivals"];
+console.log(arrivals);
+
+// Get times that are of busNum
+times = [];
+arrivals.forEach(function(arrival) {
+    if (arrival['route']['route_short_name'] == busNum) {
+        times.push(arrival['calculated_display_time']);
+    }
+});
+times.sort();  // sort in ascending times
+
+
+
+
+
+
+
+
+
+
 
 
 
