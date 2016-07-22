@@ -2,10 +2,60 @@
 
 <head>
     <meta charset="UTF-8">
-     <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300' rel='stylesheet' type='text/css'>
+
+    <!--Commenting script out for now, as it slows down testing
+    <script src="script.js"></script>-->
 </head>
 
 <body>
+    <div id="overlay">
+        <!--Unsure if overlay can be managed with just one div-->
+        <div class="hidden">
+            <label>Bus Number:
+            <input></label>
+            
+            <label>Stop ID:
+            <input></label>
+        </div>
+    </div>
+
+    <ul>
+        <a>
+            <li>
+                <button class="btn btn-block ">ADD STOP</button>
+                <!--Overlay, display toggled when Add STOP button clicked-->
+            </li>
+        </a>
+
+        <li>
+            <button class="btn btn-block"></button>
+        </li>
+
+        <li>
+            <button class="btn btn-block"></button>
+        </li>
+
+        <li>
+            <button class="btn btn-block"></button>
+        </li>
+    </ul>
+
+    <script>
+        // Enable pseudo selectors (such as a:active) on iOS
+        document.addEventListener("touchstart", function() {}, false);
+
+        // Show overlay when "Add Stop" button is clicked
+        trigger = document.querySelector("button");  // selects first button
+        trigger.addEventListener("click", function() {
+            var overlay = document.querySelector("div");
+            overlay.classList.add("clicked");
+            overlay.firstElementChild.classList.remove("hidden");
+        });
+    </script>
 </body>
 
 </html>
