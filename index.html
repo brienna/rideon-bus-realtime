@@ -13,20 +13,25 @@
 
 <body>
     <div id="overlay">
-        <!--Unsure if overlay can be managed with just one div-->
-        <div class="hidden">
-            <label>Bus Number:
-            <input></label>
+        <form>
+            <fieldset class="form-group">
+                <label>Bus Number:</label>
+                <input type="text" class="form-control form-control-lg">
+            </fieldset>
             
-            <label>Stop ID:
-            <input></label>
-        </div>
+            <fieldset class="form-group">
+                <label>Stop ID:</label>
+                <input type="text" class="form-control">
+            </fieldset>
+
+            <button type="submit" class="btn btn-block">ADD STOP</button>
+        </form>
     </div>
 
     <ul>
         <a>
             <li>
-                <button class="btn btn-block ">ADD STOP</button>
+                <button id="addStop" class="btn btn-block">ADD STOP</button>
                 <!--Overlay, display toggled when Add STOP button clicked-->
             </li>
         </a>
@@ -49,12 +54,18 @@
         document.addEventListener("touchstart", function() {}, false);
 
         // Show overlay when "Add Stop" button is clicked
-        trigger = document.querySelector("button");  // selects first button
+        var trigger = document.getElementById("addStop");  // selects the first button
+        var overlay = document.getElementById("overlay");
         trigger.addEventListener("click", function() {
-            var overlay = document.querySelector("div");
             overlay.classList.add("clicked");
-            overlay.firstElementChild.classList.remove("hidden");
+            
         });
+
+        // Show form only when overlay ends its transition
+        overlay.addEventListener("transitionend", function() {
+            overlay.firstElementChild.classList.add("show");
+        })
+
     </script>
 </body>
 
