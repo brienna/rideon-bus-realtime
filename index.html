@@ -24,13 +24,24 @@
                 <input id="stopID" type="text" class="form-control">
             </fieldset>
 
+            <fieldset class="form-group">
+                <label>Stop Nickname:</label>
+                <input id="nickname" type="text" class="form-control">
+            </fieldset>
+
             <button type="submit" class="btn btn-block">ADD STOP</button>
         </form>
     </div>
 
     <div id="schedule">
-        <p><button><</button>Bus stop info<button>></button></p>
-        <p>Minutes until bus arrival</p>
+        <h1>
+            <span></span>
+            <span></span>
+        </h1>
+        <h2></h2>
+        <h3></h3>
+        <h4></h4>
+        <h5></h5>
     </div>
 
     <ul>
@@ -61,8 +72,9 @@
             // ....validate here....
             var busNum = document.getElementById('busNum').value;
             var stopID = document.getElementById('stopID').value;
+            var nickname = document.getElementById('nickname').value;
 
-            // Create and style elements and append them to DOM
+            // Create and style button and append to DOM
             var ul = document.querySelector('ul');
             var li = document.createElement('li');
             var button = document.createElement('button');
@@ -71,17 +83,25 @@
             li.appendChild(button);
 
             // Add data (ex. BUS: 46 | STOP: 28747)
-            var bus = document.createElement('span');
-            bus.textContent = 'Bus: ';
-            var stop = document.createElement('span');
-            stop.textContent = "Stop ID: "
-            button.appendChild(bus);
-            button.appendChild(document.createTextNode(busNum));
-            button.appendChild(stop);
-            button.appendChild(document.createTextNode(stopID));
+            var name = document.createElement('span');
+            name.textContent = nickname;
+            var details = document.createElement('span');
+            details.textContent = busNum + ":" + stopID;
+            button.appendChild(name);
+            button.appendChild(details);
+            button.lastElementChild.style['font-size'] = '10px';
 
             // Link button to schedule
             button.addEventListener("click", function(event) {
+                // Send data to schedule header
+                var h1 = document.querySelector("h1");
+                var name = h1.firstElementChild;  // first span
+                var details = h1.lastElementChild;  // second span
+                name.textContent = nickname;
+                details.textContent = busNum + ":" + stopID;
+                details.style['font-size'] = '10px';
+
+                // Show schedule overlay
                 schedule.classList.add("visible");
             }, false);
 
@@ -89,8 +109,6 @@
             overlay.classList.remove("visible");
         });
 
-        // Link forward and back buttons in schedule
-        
     </script>
 </body>
 

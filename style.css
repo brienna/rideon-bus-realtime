@@ -56,13 +56,21 @@ ul {
     height: 100%;
     width: 100%;
     right: -100%;
-    padding: 2em;
     background-color: #FFFFFF;
     position: fixed;
     transition: right 300ms ease-out;
+    text-align: center;
 }
 
 #schedule.visible {
     right: 0;
     transition: right 300ms ease-in;
+}
+
+/* Style elements on schedule overlay */
+h1 {
+    padding: 6px 12px 6px 12px;
+    border: solid 1px #000;
+    margin: 0;
+    height: 15%;
 }
