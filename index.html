@@ -6,9 +6,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300' rel='stylesheet' type='text/css'>
-
-    <!--Commenting script out for now, as it slows down testing
-    <script src="script.js"></script>-->
 </head>
 
 <body>
@@ -41,7 +38,6 @@
         <h2></h2>
         <h3></h3>
         <h4></h4>
-        <h5></h5>
     </div>
 
     <ul>
@@ -50,66 +46,7 @@
         </li>
     </ul>
 
-    <script>
-        // Enable pseudo selectors on iOS
-        document.addEventListener("touchstart", function() {}, false);
-
-        // Show overlay when "Add Stop" button is clicked
-        var trigger = document.getElementById("addStop");
-        var overlay = document.getElementById("overlay");
-        trigger.addEventListener("click", function() {
-            overlay.classList.add("visible");
-        });
-
-        // Add stop to list on form submit
-        var form = overlay.firstElementChild;
-        var schedule = document.getElementById("schedule");
-        form.addEventListener("submit", function(event) {
-            // Prevent form from submitting
-            event.preventDefault();
-
-            // Validate form submission and extract data
-            // ....validate here....
-            var busNum = document.getElementById('busNum').value;
-            var stopID = document.getElementById('stopID').value;
-            var nickname = document.getElementById('nickname').value;
-
-            // Create and style button and append to DOM
-            var ul = document.querySelector('ul');
-            var li = document.createElement('li');
-            var button = document.createElement('button');
-            button.classList.add("btn", "btn-block", "bus-stop");
-            ul.appendChild(li);
-            li.appendChild(button);
-
-            // Add data (ex. BUS: 46 | STOP: 28747)
-            var name = document.createElement('span');
-            name.textContent = nickname;
-            var details = document.createElement('span');
-            details.textContent = busNum + ":" + stopID;
-            button.appendChild(name);
-            button.appendChild(details);
-            button.lastElementChild.style['font-size'] = '10px';
-
-            // Link button to schedule
-            button.addEventListener("click", function(event) {
-                // Send data to schedule header
-                var h1 = document.querySelector("h1");
-                var name = h1.firstElementChild;  // first span
-                var details = h1.lastElementChild;  // second span
-                name.textContent = nickname;
-                details.textContent = busNum + ":" + stopID;
-                details.style['font-size'] = '10px';
-
-                // Show schedule overlay
-                schedule.classList.add("visible");
-            }, false);
-
-            // Exit overlay
-            overlay.classList.remove("visible");
-        });
-
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
