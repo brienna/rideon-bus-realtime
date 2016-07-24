@@ -28,11 +28,15 @@
         </form>
     </div>
 
+    <div id="schedule">
+        <p><button><</button>Bus stop info<button>></button></p>
+        <p>Minutes until bus arrival</p>
+    </div>
+
     <ul>
         <li>
             <button id="addStop" class="btn btn-block">ADD STOP</button>
         </li>
-
     </ul>
 
     <script>
@@ -45,9 +49,10 @@
         trigger.addEventListener("click", function() {
             overlay.classList.add("visible");
         });
-        
+
         // Add stop to list on form submit
         var form = overlay.firstElementChild;
+        var schedule = document.getElementById("schedule");
         form.addEventListener("submit", function(event) {
             // Prevent form from submitting
             event.preventDefault();
@@ -60,24 +65,32 @@
             // Create and style elements and append them to DOM
             var ul = document.querySelector('ul');
             var li = document.createElement('li');
-            var a = document.createElement('a');
-            a.classList.add("btn", "btn-block");
+            var button = document.createElement('button');
+            button.classList.add("btn", "btn-block", "bus-stop");
             ul.appendChild(li);
-            li.appendChild(a);
+            li.appendChild(button);
 
             // Add data (ex. BUS: 46 | STOP: 28747)
             var bus = document.createElement('span');
             bus.textContent = 'Bus: ';
             var stop = document.createElement('span');
             stop.textContent = "Stop ID: "
-            a.appendChild(bus);
-            a.appendChild(document.createTextNode(busNum));
-            a.appendChild(stop);
-            a.appendChild(document.createTextNode(stopID));
+            button.appendChild(bus);
+            button.appendChild(document.createTextNode(busNum));
+            button.appendChild(stop);
+            button.appendChild(document.createTextNode(stopID));
+
+            // Link button to schedule
+            button.addEventListener("click", function(event) {
+                schedule.classList.add("visible");
+            }, false);
 
             // Exit overlay
             overlay.classList.remove("visible");
         });
+
+        // Link forward and back buttons in schedule
+        
     </script>
 </body>
 

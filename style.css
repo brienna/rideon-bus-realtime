@@ -51,3 +51,18 @@ ul {
     transition: top 300ms ease-in;
 }
 
+/* Schedule */
+#schedule {
+    height: 100%;
+    width: 100%;
+    right: -100%;
+    padding: 2em;
+    background-color: #FFFFFF;
+    position: fixed;
+    transition: right 300ms ease-out;
+}
+
+#schedule.visible {
+    right: 0;
+    transition: right 300ms ease-in;
+}
