@@ -29,33 +29,25 @@
     </div>
 
     <ul>
-        <a>
-            <li>
-                <button id="addStop" class="btn btn-block">ADD STOP</button>
-            </li>
-        </a>
+        <li>
+            <button id="addStop" class="btn btn-block">ADD STOP</button>
+        </li>
+
     </ul>
 
     <script>
-        // Enable pseudo selectors (such as a:active) on iOS
+        // Enable pseudo selectors on iOS
         document.addEventListener("touchstart", function() {}, false);
 
         // Show overlay when "Add Stop" button is clicked
-        var trigger = document.getElementById("addStop");  // selects the first button
+        var trigger = document.getElementById("addStop");
         var overlay = document.getElementById("overlay");
-        var form = overlay.firstElementChild;
-
-        function showForm() {
-            form.classList.add("show");
-        }
-
         trigger.addEventListener("click", function() {
-            overlay.classList.add("clicked");
-            // Show form only when overlay ends its transition
-            overlay.addEventListener("transitionend", showForm);
+            overlay.classList.add("visible");
         });
         
         // Add stop to list on form submit
+        var form = overlay.firstElementChild;
         form.addEventListener("submit", function(event) {
             // Prevent form from submitting
             event.preventDefault();
@@ -83,10 +75,8 @@
             a.appendChild(stop);
             a.appendChild(document.createTextNode(stopID));
 
-            // Return to home view
-            form.classList.remove("show");
-            overlay.classList.remove("clicked");
-            overlay.removeEventListener("transitionend", showForm);
+            // Exit overlay
+            overlay.classList.remove("visible");
         });
     </script>
 </body>

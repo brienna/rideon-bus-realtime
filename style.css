@@ -26,42 +26,28 @@ ul {
 }
 
 /* Style "Add Stops" button */
-a:first-child .btn {
+.btn {
     background-color: #EB8921;
 } 
 
-a:first-child:active .btn {
+.btn:active {
     background-color: gray;
 }
 
 /* Overlay */
 #overlay {
-    height: 0px;
+    top: -100%;
+    height: 100%;
     width: 100%;
-    background-color: #D3D3D3;
-    /* Set transition on this element before event */
-    -webkit-transition: height .5s ease;
-    -moz-transition: height .5s ease;
-    -o-transition: height .5s ease;
-    transition: height .5s ease;
+    padding: 2em;
+    background-color: #54494b;
+    transition: top 300ms ease-out;
     /* Prevent scrolling */
     position: fixed;
 }
 
-#overlay.clicked {
-    height: 100%;
-    border-bottom: solid 1px black;
-}
-
-/* Style the "Add Stops" form in the overlay */
-form {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.2s linear;
-}
-
-form.show {
-    visibility: visible;
-    opacity: 1;
+#overlay.visible {
+    top: 0px;
+    transition: top 300ms ease-in;
 }
 
