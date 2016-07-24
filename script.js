@@ -48,7 +48,7 @@ form.addEventListener("submit", function(event) {
         var animation = document.getElementsByClassName("spinner")[0];
         animation.classList.add("animate");
         button.appendChild(animation);
-        
+
         // Send data to schedule header
         var h1 = document.querySelector("h1");
         var name = h1.firstElementChild;  // first span
@@ -58,16 +58,7 @@ form.addEventListener("submit", function(event) {
         details.style['font-size'] = '10px';
 
         // Send data to schedule body
-        times = getTimes(busNum, stopID);
-        var h2 = document.querySelector("h2");
-        var h3 = document.querySelector("h3");
-        var h4 = document.querySelector("h4");
-        h2.textContent = times[0];
-        h3.textContent = times[1];
-        h4.textContent = times[2];
-
-        // Show schedule overlay
-        schedule.classList.add("show");
+        getTimes(busNum, stopID);
     }, false);
 
     // Exit overlay
@@ -81,28 +72,50 @@ function getTimes(bus, stop) {
 
     // Get realtime data via HTTP request to RideOn API
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://rideonrealtime.net/arrivals/" + stopID + ".json" + token, false);
+    xhr.onreadystatechange = function() {
+        // Check status of request
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              console.log(xhr.responseText);
+              handleResponse();
+            } else {
+              console.error(xhr.statusText);
+            }
+        }
+    }
+
+    xhr.open("GET", "http://rideonrealtime.net/arrivals/" + stopID + ".json" + token, true);
     xhr.send();
 
-    // Check status of request
-    console.log(xhr.status, xhr.statusText);  // should get 200, OK
+    function handleResponse() {
+        // Handle the response, which comes in JSON format
+        var json = xhr.responseText;
+        var data = JSON.parse(json);
 
-    // Handle the response, which comes in JSON format
-    var json = xhr.responseText;
-    var data = JSON.parse(json);
+        // Get calculated arrivals, which is based on realtime data
+        var arrivals = data["calculated_arrivals"];
 
-    // Get calculated arrivals, which is based on realtime data
-    var arrivals = data["calculated_arrivals"];
+        // Get times that are of busNum
+        var times = [];
+        console.log('working');
+        arrivals.forEach(function(arrival) {
+            if (arrival['route']['route_short_name'] == busNum) {
+                times.push(arrival['calculated_display_time']);
+            }
+        });
+        times.sort();  // sort in ascending times
 
-    // Get times that are of busNum
-    times = [];
-    arrivals.forEach(function(arrival) {
-        if (arrival['route']['route_short_name'] == busNum) {
-            times.push(arrival['calculated_display_time']);
-        }
-    });
-    times.sort();  // sort in ascending times
-    return times;
+        var h2 = document.querySelector("h2");
+        var h3 = document.querySelector("h3");
+        var h4 = document.querySelector("h4");
+        h2.textContent = times[0];
+        h3.textContent = times[1];
+        h4.textContent = times[2];
+
+        // Show schedule overlay
+        schedule.classList.add("show");
+    }
+    
 }
 
 // Define a function that will remove a class whenever sent element and className 
