@@ -40,6 +40,15 @@ form.addEventListener("submit", function(event) {
 
     // Link button to schedule
     button.addEventListener("click", function(event) {
+        // Empty button, then append loading animation div
+        var children = button.childNodes;
+        for(var i = 0; i < children.length; i++){
+            children[i].style.display = "none";
+        }
+        var animation = document.getElementsByClassName("spinner")[0];
+        animation.classList.add("animate");
+        button.appendChild(animation);
+        
         // Send data to schedule header
         var h1 = document.querySelector("h1");
         var name = h1.firstElementChild;  // first span
@@ -58,14 +67,12 @@ form.addEventListener("submit", function(event) {
         h4.textContent = times[2];
 
         // Show schedule overlay
-        schedule.classList.add("visible");
+        schedule.classList.add("show");
     }, false);
 
     // Exit overlay
     overlay.classList.remove("visible");
 });
-
-/////////////////////////////////////////////////////
 
 function getTimes(bus, stop) {
     busNum = bus;
@@ -97,5 +104,7 @@ function getTimes(bus, stop) {
     times.sort();  // sort in ascending times
     return times;
 }
+
+// Define a function that will remove a class whenever sent element and className 
 
 
