@@ -16,12 +16,12 @@
         <form>
             <fieldset class="form-group">
                 <label>Bus Number:</label>
-                <input type="text" class="form-control form-control-lg">
+                <input id="busNum" type="text" class="form-control form-control-lg">
             </fieldset>
             
             <fieldset class="form-group">
                 <label>Stop ID:</label>
-                <input type="text" class="form-control">
+                <input id="stopID" type="text" class="form-control">
             </fieldset>
 
             <button type="submit" class="btn btn-block">ADD STOP</button>
@@ -32,21 +32,8 @@
         <a>
             <li>
                 <button id="addStop" class="btn btn-block">ADD STOP</button>
-                <!--Overlay, display toggled when Add STOP button clicked-->
             </li>
         </a>
-
-        <li>
-            <button class="btn btn-block"></button>
-        </li>
-
-        <li>
-            <button class="btn btn-block"></button>
-        </li>
-
-        <li>
-            <button class="btn btn-block"></button>
-        </li>
     </ul>
 
     <script>
@@ -56,16 +43,51 @@
         // Show overlay when "Add Stop" button is clicked
         var trigger = document.getElementById("addStop");  // selects the first button
         var overlay = document.getElementById("overlay");
+        var form = overlay.firstElementChild;
+
+        function showForm() {
+            form.classList.add("show");
+        }
+
         trigger.addEventListener("click", function() {
             overlay.classList.add("clicked");
-            
+            // Show form only when overlay ends its transition
+            overlay.addEventListener("transitionend", showForm);
         });
+        
+        // Add stop to list on form submit
+        form.addEventListener("submit", function(event) {
+            // Prevent form from submitting
+            event.preventDefault();
 
-        // Show form only when overlay ends its transition
-        overlay.addEventListener("transitionend", function() {
-            overlay.firstElementChild.classList.add("show");
-        })
+            // Validate form submission and extract data
+            // ....validate here....
+            var busNum = document.getElementById('busNum').value;
+            var stopID = document.getElementById('stopID').value;
 
+            // Create and style elements and append them to DOM
+            var ul = document.querySelector('ul');
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            a.classList.add("btn", "btn-block");
+            ul.appendChild(li);
+            li.appendChild(a);
+
+            // Add data (ex. BUS: 46 | STOP: 28747)
+            var bus = document.createElement('span');
+            bus.textContent = 'Bus: ';
+            var stop = document.createElement('span');
+            stop.textContent = "Stop ID: "
+            a.appendChild(bus);
+            a.appendChild(document.createTextNode(busNum));
+            a.appendChild(stop);
+            a.appendChild(document.createTextNode(stopID));
+
+            // Return to home view
+            form.classList.remove("show");
+            overlay.classList.remove("clicked");
+            overlay.removeEventListener("transitionend", showForm);
+        });
     </script>
 </body>
 
